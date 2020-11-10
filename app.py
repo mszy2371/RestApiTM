@@ -38,6 +38,12 @@ class ProductSchema(ma.Schema):
 product_schema = ProductSchema()
 products_schema = ProductSchema(many=True)
 
+# main route
+
+@app.route('/')
+def index():
+    return "This is the main page"
+
 # Create a Product:
 @app.route('/product', methods=['POST'])
 def add_product():
@@ -66,6 +72,32 @@ def get_product(id):
     product = Product.query.get(id)
     return product_schema.jsonify(product)
 
+#  Update a Product:
+@app.route('/product/<id>', methods=['PUT'])
+def update_product(id):
+    product =Product.query.get(id)
+
+    name = request.json['name']
+    description = request.json['description']
+    price = request.json['price']
+    qty = request.json['qty']
+
+    product.name = name
+    product.description = description
+    product.price = price
+    product.qty = qty
+
+    db.session.commit()
+
+    return product_schema.jsonify(product)
+
+    # Get single product
+@app.route('/product/<id>', methods=['DELETE'])
+def delete_product(id):
+    product = Product.query.get(id)
+    db.session.delete(product)
+    db.session.commit()
+    return product_schema.jsonify(product)
 
 
 # Run server
