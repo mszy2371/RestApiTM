@@ -1,4 +1,4 @@
 # RestApiTM
 
 
-RESTful api utilizing Flask and Marshmallow. Followed an online tutorial to create it.
+RESTful api utilizing Flask, Sqlite, SQL Alchemy and Marshmallow.
